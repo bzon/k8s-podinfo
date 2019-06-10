@@ -3,6 +3,7 @@
 *.dll
 *.so
 *.dylib
+podinfo
 
 # Test binary, build with `go test -c`
 *.test
@@ -19,3 +20,4 @@ release/
 build/
 gcloud/
 dist/
+vendor/

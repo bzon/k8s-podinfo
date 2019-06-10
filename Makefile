@@ -6,13 +6,22 @@ EMPTY:=
 SPACE:=$(EMPTY) $(EMPTY)
 COMMA:=$(EMPTY),$(EMPTY)
 NAME:=podinfo
-DOCKER_REPOSITORY:=stefanprodan
+DOCKER_REPOSITORY:=bzon
 DOCKER_IMAGE_NAME:=$(DOCKER_REPOSITORY)/$(NAME)
-GITREPO:=github.com/stefanprodan/k8s-podinfo
+GITREPO:=github.com/bzon/k8s-podinfo
 GITCOMMIT:=$(shell git describe --dirty --always)
-VERSION:=$(shell grep 'VERSION' pkg/version/version.go | awk '{ print $$4 }' | tr -d '"')
+VERSION:=$(shell git rev-parse --abbrev-ref HEAD)-$(GITCOMMIT)
 LINUX_ARCH:=arm arm64 ppc64le s390x amd64
 PLATFORMS:=$(subst $(SPACE),$(COMMA),$(foreach arch,$(LINUX_ARCH),linux/$(arch)))
+
+demo-build-push:
+	rm -f ./cmd/podinfo/podinfo
+	cd ./cmd/podinfo/ && CGO_ENABLED=0 GOOS=linux GOARCH=$$arch go build -ldflags="-s -w -X $(GITREPO)/pkg/version.REVISION=$(VERSION)" -o podinfo
+	cp ./cmd/podinfo/podinfo .
+	docker build -t $(DOCKER_IMAGE_NAME):$(VERSION) .
+	docker push $(DOCKER_IMAGE_NAME):$(VERSION)
+	docker tag $(DOCKER_IMAGE_NAME):$(VERSION) $(DOCKER_IMAGE_NAME):latest
+	docker push $(DOCKER_IMAGE_NAME):latest
 
 .PHONY: build
 build:

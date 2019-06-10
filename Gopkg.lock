@@ -352,6 +352,19 @@
   version = "v1.1.0"
 
 [[projects]]
+  digest = "1:1c3f7150788a9a293a4a51cec056dd56fc39fb52c3250ae9f12408f850af0462"
+  name = "github.com/stefanprodan/k8s-podinfo"
+  packages = [
+    "pkg/api",
+    "pkg/fscache",
+    "pkg/signals",
+    "pkg/version",
+  ]
+  pruneopts = "UT"
+  revision = "d10ba4ac4312885a8ae6b70bbda5ac46202fe04e"
+  version = "v1.4.2"
+
+[[projects]]
   digest = "1:4aeb3860275fa1fd60cccfb5a6ef85da438bf17402e1e84412ade4d4b55066a0"
   name = "github.com/ulikunitz/xz"
   packages = [
@@ -442,6 +455,10 @@
     "github.com/spf13/cobra",
     "github.com/spf13/pflag",
     "github.com/spf13/viper",
+    "github.com/stefanprodan/k8s-podinfo/pkg/api",
+    "github.com/stefanprodan/k8s-podinfo/pkg/fscache",
+    "github.com/stefanprodan/k8s-podinfo/pkg/signals",
+    "github.com/stefanprodan/k8s-podinfo/pkg/version",
     "go.uber.org/zap",
     "go.uber.org/zap/zapcore",
   ]
